@@ -87,7 +87,12 @@ export class Repeat<C extends Collection = unknown[]> implements ICustomAttribut
   ): void | Promise<void> {
     this.checkCollectionObserver(flags);
 
+    // return this.deactivateAllViews(initiator, flags);
     return this.deactivateAllViews(initiator, flags);
+  }
+
+  public unbinding() {
+    this.views.length = 0;
   }
 
   // called by SetterObserver
@@ -230,10 +235,12 @@ export class Repeat<C extends Collection = unknown[]> implements ICustomAttribut
     let promises: Promise<void>[] | undefined = void 0;
     let ret: void | Promise<void>;
     let view: ISyntheticView;
+    let i = 0;
 
     const { views, $controller } = this;
+    const ii = views.length;
 
-    for (let i = 0, ii = views.length; i < ii; ++i) {
+    for (; i < ii; ++i) {
       view = views[i];
       view.release();
       ret = view.deactivate(initiator ?? view, $controller, flags);
@@ -256,12 +263,12 @@ export class Repeat<C extends Collection = unknown[]> implements ICustomAttribut
     let promises: Promise<void>[] | undefined = void 0;
     let ret: void | Promise<void>;
     let view: ISyntheticView;
+    let i = 0;
 
     const { $controller, views } = this;
-
     const deleted = indexMap.deletedItems;
     const deletedLen = deleted.length;
-    let i = 0;
+
     for (; i < deletedLen; ++i) {
       view = views[deleted[i]];
       view.release();
@@ -294,11 +301,12 @@ export class Repeat<C extends Collection = unknown[]> implements ICustomAttribut
     let ret: void | Promise<void>;
     let view: ISyntheticView;
     let viewScope: Scope;
+    let i = 0;
 
     const { $controller, factory, local, normalizedItems, location, views } = this;
     const mapLen = indexMap.length;
 
-    for (let i = 0; i < mapLen; ++i) {
+    for (; i < mapLen; ++i) {
       if (indexMap[i] === -2) {
         view = factory.create(flags);
         views.splice(i, 0, view);
@@ -322,7 +330,7 @@ export class Repeat<C extends Collection = unknown[]> implements ICustomAttribut
 
     let next: ISyntheticView;
     let j = seqLen - 1;
-    let i = newLen - 1;
+    i = newLen - 1;
     for (; i >= 0; --i) {
       view = views[i];
       next = views[i + 1];
