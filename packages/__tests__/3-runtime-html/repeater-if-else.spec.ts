@@ -9,9 +9,10 @@ import {
   TestConfiguration,
   trimFull,
   assert,
+  createFixture,
 } from '@aurelia/testing';
 
-const spec = 'repeater-if-else';
+const spec = '3-runtime-html/repeater-if-else.spec.ts';
 
 describe(spec, function () {
   type Comp = { items: any[]; display: boolean };
@@ -578,4 +579,74 @@ describe(spec, function () {
           });
     });
 
+});
+
+describe('3-runtime-html/repeater-if-else.spec.ts', function () {
+  it('GH #1119 - [array] works when wrapped in if.bind', async function () {
+    const { component, host, tearDown, startPromise } = createFixture(
+      `<div if.bind="!!items.length">
+        <p repeat.for="i of items">
+          \${i} <button type="button" click.trigger="remove($index)">remove</button><br>
+        </p>
+      </div>
+      <button click.trigger="add()">add</button>`,
+      class App {
+        public items = [];
+        public add() {
+          this.items.push('item');
+        }
+        public remove(i: number) {
+          this.items.splice(i, 1);
+        }
+      }
+    );
+
+    await startPromise;
+    assert.strictEqual(host.querySelectorAll('p').length, 0);
+
+    component.add();
+    assert.strictEqual(host.querySelectorAll('p').length, 1);
+    component.remove(0);
+    assert.strictEqual(host.querySelectorAll('p').length, 0);
+
+    component.add();
+    assert.strictEqual(host.querySelectorAll('p').length, 1);
+
+    await tearDown();
+  });
+
+  // it.only('GH #1119 - [Set] works when wrapped in if.bind', async function () {
+  //   const { ctx, component, tearDown, startPromise } = createFixture(
+  //     `<div if.bind="!!items.size">
+  //       <div repeat.for="i of items">
+  //         \${i} <button type="button" click.trigger="remove(i)">remove</button><br>
+  //       </div>
+  //     </div>
+  //     <button click.trigger="add()">add</button>`,
+  //     class App {
+  //       public items = new Set();
+  //       public add() {
+  //         this.items.add(`item ${this.items.size}`);
+  //       }
+  //       public remove(i: any) {
+  //         this.items.delete(i);
+  //       }
+  //     }
+  //   );
+
+  //   await startPromise;
+
+  //   component.add();
+  //   component.remove('item');
+
+  //   component.add();
+
+  //   await tearDown();
+  // });
+
+  async function waitForFrames(count: number, ctx: TestContext) {
+    while (count-- > 0) {
+      await new Promise(r => ctx.wnd.requestAnimationFrame(r))
+    }
+  }
 });
