@@ -1,16 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion */
 import {
   IContainer,
-  IIndexable,
   nextId,
-  Writable,
-  Constructable,
-  IDisposable,
   isObject,
   ILogger,
   LogLevel,
-  IServiceLocator,
   DI,
+  emptyArray,
 } from '@aurelia/kernel';
 import {
   AccessScopeExpression,
@@ -25,15 +21,24 @@ import { convertToRenderLocation, INode, INodeSequence, IRenderLocation, setRef 
 import { CustomElementDefinition, CustomElement, PartialCustomElementDefinition } from '../resources/custom-element.js';
 import { CustomAttributeDefinition, CustomAttribute } from '../resources/custom-attribute.js';
 import { IRenderContext, getRenderContext, RenderContext, ICompiledRenderContext } from './render-context.js';
-import { ChildrenObserver } from './children.js';
+import { ChildrenDefinition, ChildrenObserver } from './children.js';
 import { IAppRoot } from '../app-root.js';
 import { IPlatform } from '../platform.js';
 import { IShadowDOMGlobalStyles, IShadowDOMStyles } from './styles.js';
 import { ComputedWatcher, ExpressionWatcher } from './watchers.js';
+
+import type {
+  IIndexable,
+  Writable,
+  Constructable,
+  IDisposable,
+  IServiceLocator,
+} from '@aurelia/kernel';
 import type {
   IBinding,
   IObservable,
   AccessorOrObserver,
+  IsBindingBehavior,
 } from '@aurelia/runtime';
 import type { BindableDefinition } from '../bindable.js';
 import type { PropertyBinding } from '../binding/property-binding.js';
@@ -120,6 +125,7 @@ export class Controller<C extends IViewModel = IViewModel> implements IControlle
   private logger: ILogger | null = null;
   private debug: boolean = false;
   private fullyNamed: boolean = false;
+  private childrenObs: ChildrenObserver[] = emptyArray;
 
   public readonly platform: IPlatform;
   public readonly hooks: HooksDefinition;
@@ -284,7 +290,7 @@ export class Controller<C extends IViewModel = IViewModel> implements IControlle
       createWatchers(this, this.container, definition, instance);
     }
     createObservers(this, definition, flags, instance);
-    createChildrenObservers(this as Controller, definition, flags, instance);
+    this.childrenObs = createChildrenObservers(this as Controller, definition, flags, instance);
 
     if (this.hooks.hasDefine) {
       if (this.debug) { this.logger.trace(`invoking define() hook`); }
@@ -331,8 +337,6 @@ export class Controller<C extends IViewModel = IViewModel> implements IControlle
     const { projectionsMap, shadowOptions, isStrictBinding, hasSlots, containerless } = compiledContext.compiledDefinition;
 
     compiledContext.registerProjections(projectionsMap, this.scope!);
-    // once the projections are registered, we can cleanup the projection map to prevent memory leaks.
-    projectionsMap.clear();
     this.isStrictBinding = isStrictBinding;
 
     if ((this.hostController = CustomElement.for(this.host!, optional) as Controller | null) !== null) {
@@ -466,6 +470,7 @@ export class Controller<C extends IViewModel = IViewModel> implements IControlle
         this.scope = scope ?? null;
         break;
       case ViewModelKind.synthetic:
+        // maybe only check when there's not already a scope
         if (scope === void 0 || scope === null) {
           throw new Error(`Scope is null or undefined`);
         }
@@ -507,6 +512,17 @@ export class Controller<C extends IViewModel = IViewModel> implements IControlle
 
   private bind(): void {
     if (this.debug) { this.logger!.trace(`bind()`); }
+
+    // timing: after binding, before bound
+    // reason: needs to start observing before all the bindings finish their $bind phase,
+    //         so that changes in one binding can be reflected into the other, regardless the index of the binding
+    //
+    // todo: is this timing appropriate?
+    if (this.childrenObs.length) {
+      for (let i = 0; i < this.childrenObs.length; ++i) {
+        this.childrenObs[i].start();
+      }
+    }
 
     if (this.bindings !== null) {
       for (let i = 0; i < this.bindings.length; ++i) {
@@ -636,6 +652,15 @@ export class Controller<C extends IViewModel = IViewModel> implements IControlle
 
     if (initiator === this) {
       this.enterDetaching();
+    }
+
+    // timing: before deactiving
+    // reason: avoid queueing a callback from the mutation observer, caused by the changes of nodes by repeat/if etc...
+    // todo: is this appropriate timing?
+    if (this.childrenObs.length) {
+      for (let i = 0; i < this.childrenObs.length; ++i) {
+        this.childrenObs[i].stop();
+      }
     }
 
     if (this.children !== null) {
@@ -1055,9 +1080,10 @@ function createObservers(
   if (length > 0) {
     let name: string;
     let bindable: BindableDefinition;
+    let i = 0;
     const observers = getLookup(instance as IIndexable);
 
-    for (let i = 0; i < length; ++i) {
+    for (; i < length; ++i) {
       name = observableNames[i];
 
       if (observers[name] === void 0) {
@@ -1081,20 +1107,23 @@ function createChildrenObservers(
   // deepscan-disable-next-line
   _flags: LifecycleFlags,
   instance: object,
-): void {
+): ChildrenObserver[] {
   const childrenObservers = definition.childrenObservers;
   const childObserverNames = Object.getOwnPropertyNames(childrenObservers);
   const length = childObserverNames.length;
   if (length > 0) {
     const observers = getLookup(instance as IIndexable);
+    const obs: ChildrenObserver[] = [];
 
     let name: string;
-    for (let i = 0; i < length; ++i) {
+    let i = 0;
+    let childrenDescription: ChildrenDefinition;
+    for (; i < length; ++i) {
       name = childObserverNames[i];
 
       if (observers[name] == void 0) {
-        const childrenDescription = childrenObservers[name];
-        observers[name] = new ChildrenObserver(
+        childrenDescription = childrenObservers[name];
+        obs[obs.length] = observers[name] = new ChildrenObserver(
           controller as ICustomElementController,
           instance as IIndexable,
           name,
@@ -1106,7 +1135,10 @@ function createChildrenObservers(
         );
       }
     }
+    return obs;
   }
+
+  return emptyArray;
 }
 
 const AccessScopeAst = {
@@ -1130,10 +1162,13 @@ function createWatchers(
   const observerLocator = context!.get(IObserverLocator);
   const expressionParser = context.get(IExpressionParser);
   const watches = definition.watches;
+  const ii = watches.length;
   let expression: IWatchDefinition['expression'];
   let callback: IWatchDefinition['callback'];
+  let ast: IsBindingBehavior;
+  let i = 0;
 
-  for (let i = 0, ii = watches.length; ii > i; ++i) {
+  for (; ii > i; ++i) {
     ({ expression, callback } = watches[i]);
     callback = typeof callback === 'function'
       ? callback
@@ -1152,7 +1187,7 @@ function createWatchers(
         true,
       ));
     } else {
-      const ast = typeof expression === 'string'
+      ast = typeof expression === 'string'
         ? expressionParser.parse(expression, BindingType.BindCommand)
         : AccessScopeAst.for(expression);
 

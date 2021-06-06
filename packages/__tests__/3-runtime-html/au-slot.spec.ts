@@ -82,6 +82,7 @@ describe('au-slot', function () {
       public readonly registrations: any[],
       public readonly expected: Record<string, readonly [string, AuSlotsInfo]>,
       public readonly additionalAssertion?: (ctx: AuSlotTestExecutionContext) => void | Promise<void>,
+      public readonly only: boolean = false,
     ) { }
   }
   function* getTestData() {
@@ -90,7 +91,7 @@ describe('au-slot', function () {
         public constructor(
           @IAuSlotsInfo public readonly slots: IAuSlotsInfo,
         ) {
-           assert.instanceOf(slots, AuSlotsInfo);
+          assert.instanceOf(slots, AuSlotsInfo);
         }
       }
       return CustomElement.define({ name: 'my-element', isStrictBinding: true, template, bindables: { people: { mode: BindingMode.default } }, }, MyElement);
@@ -191,7 +192,7 @@ describe('au-slot', function () {
         public constructor(
           @IAuSlotsInfo public readonly slots: IAuSlotsInfo,
         ) {
-           assert.instanceOf(slots, AuSlotsInfo);
+          assert.instanceOf(slots, AuSlotsInfo);
         }
       }
       yield new TestData(
@@ -213,7 +214,7 @@ describe('au-slot', function () {
         public constructor(
           @IAuSlotsInfo public readonly slots: IAuSlotsInfo,
         ) {
-           assert.instanceOf(slots, AuSlotsInfo);
+          assert.instanceOf(slots, AuSlotsInfo);
         }
       }
       yield new TestData(
@@ -512,6 +513,255 @@ describe('au-slot', function () {
           },
         );
       }
+
+      yield new TestData(
+        'works with data from repeater scope - template[repeat.for]>custom-element - source: override context in outer scope',
+        `<let items.bind="['1', '2']"></let>
+         <template repeat.for="item of items">
+          <my-element>
+            <template au-slot>
+              \${item}
+            </template>
+          </my-element>
+         </template>`,
+        [
+          createMyElement('<au-slot></au-slot>')
+        ],
+        {
+          'my-element': [`1`, new AuSlotsInfo(['default'])],
+          'my-element+my-element': [`2`, new AuSlotsInfo(['default'])],
+        },
+      );
+
+      yield new TestData(
+        'works with data from repeater scope - custom-element[repeat.for] - source: override context in outer scope',
+        `<let items.bind="['1', '2']"></let>
+        <my-element repeat.for="item of items">
+          <template au-slot>
+            \${item}
+          </template>
+        </my-element>`,
+        [
+          createMyElement('<au-slot></au-slot>')
+        ],
+        {
+          'my-element': [`1`, new AuSlotsInfo(['default'])],
+          'my-element+my-element': [`2`, new AuSlotsInfo(['default'])],
+        },
+      );
+
+      yield new TestData(
+        'works with data from repeater scope - template[repeat.for]>custom-element - source: binding context in outer scope',
+        `<template>
+          <template repeat.for="person of people">
+            <my-element>
+              <template au-slot>
+                \${person.firstName}
+              </template>
+            </my-element>
+          </template>
+         </template>`,
+        [
+          createMyElement('<au-slot></au-slot>')
+        ],
+        {
+          'my-element': [`John`, new AuSlotsInfo(['default'])],
+          'my-element+my-element': [`Max`, new AuSlotsInfo(['default'])],
+        },
+      );
+
+      yield new TestData(
+        'works with data from repeater scope - custom-element[repeat.for] - source: binding context in outer scope',
+        `<my-element repeat.for="person of people">
+          <template au-slot>
+            \${person.firstName}
+          </template>
+        </my-element>`,
+        [
+          createMyElement('<au-slot></au-slot>')
+        ],
+        {
+          'my-element': [`John`, new AuSlotsInfo(['default'])],
+          'my-element+my-element': [`Max`, new AuSlotsInfo(['default'])],
+        },
+      );
+
+      {
+        let counter = 0;
+        const expected: Record<string, readonly [string, AuSlotsInfo]> = Object.fromEntries(new Array(3)
+          .fill(0)
+          .flatMap(
+            (_, i) => new Array(3)
+              .fill(0)
+              .map((__, j) => [
+                new Array(++counter).fill('my-element').join('+'),
+                [String(i * j), new AuSlotsInfo(['default'])]
+              ])
+          ));
+
+        yield new TestData(
+          'works with data from repeater scope - template[repeat.for]>template[repeat.for]>custom-element - nested repeater',
+          `<template>
+          <template repeat.for="i of 3">
+            <template repeat.for="j of 3">
+              <my-element>
+                <template au-slot>
+                  \${i*j}
+                </template>
+              </my-element>
+            </template>
+          </template>
+         </template>`,
+          [
+            createMyElement('<au-slot></au-slot>')
+          ],
+          expected,
+        );
+
+        yield new TestData(
+          'works with data from repeater scope - template[repeat.for]>custom-element[repeat.for] - nested repeater',
+          `<template>
+          <template repeat.for="i of 3">
+            <my-element repeat.for="j of 3">
+              <template au-slot>
+                \${i*j}
+              </template>
+            </my-element>
+          </template>
+         </template>`,
+          [
+            createMyElement('<au-slot></au-slot>')
+          ],
+          expected,
+        );
+
+        yield new TestData(
+          'works with data from repeater scope - template[repeat.for]>template[repeat.for]>custom-element - nested repeater - source: override context',
+          `<let rows.bind="3" cols.bind="3"></let>
+          <template repeat.for="i of rows">
+            <template repeat.for="j of cols">
+              <my-element>
+                <template au-slot>
+                  \${i*j}
+                </template>
+              </my-element>
+            </template>
+          </template>`,
+          [
+            createMyElement('<au-slot></au-slot>')
+          ],
+          expected,
+        );
+
+        yield new TestData(
+          'works with data from repeater scope - template[repeat.for]>custom-element[repeat.for] - nested repeater - source: override context',
+          `<let rows.bind="3" cols.bind="3"></let>
+          <template repeat.for="i of rows">
+            <my-element repeat.for="j of cols">
+              <template au-slot>
+                \${i*j}
+              </template>
+            </my-element>
+          </template>`,
+          [
+            createMyElement('<au-slot></au-slot>')
+          ],
+          expected,
+        );
+      }
+
+      {
+        const expected: Record<string, readonly [string, AuSlotsInfo]> = {
+          'my-element': ['John Mustermann', new AuSlotsInfo(['default'])],
+          'my-element+my-element': ['John Doe', new AuSlotsInfo(['default'])],
+          'my-element+my-element+my-element': ['Max Mustermann', new AuSlotsInfo(['default'])],
+          'my-element+my-element+my-element+my-element': ['Max Doe', new AuSlotsInfo(['default'])],
+        };
+        yield new TestData(
+          'works with data from repeater scope - template[repeat.for]>template[repeat.for]>custom-element - nested repeater - source: binding context',
+          `<template>
+          <template repeat.for="i of people">
+            <template repeat.for="j of people.slice().reverse()">
+              <my-element>
+                <template au-slot>
+                  \${i.firstName} \${j.lastName}
+                </template>
+              </my-element>
+            </template>
+          </template>
+        </template>`,
+          [
+            createMyElement('<au-slot></au-slot>')
+          ],
+          expected,
+        );
+
+        yield new TestData(
+          'works with data from repeater scope - template[repeat.for]>custom-element[repeat.for] - nested repeater - source: binding context',
+          `<template>
+          <template repeat.for="i of people">
+            <my-element repeat.for="j of people.slice().reverse()">
+              <template au-slot>
+                \${i.firstName} \${j.lastName}
+              </template>
+            </my-element>
+          </template>
+        </template>
+        `,
+          [
+            createMyElement('<au-slot></au-slot>')
+          ],
+          expected,
+        );
+      }
+
+      {
+        @customElement({
+          name: 'list-box',
+          template: `<div><au-slot></au-slot></div>`
+        })
+        class ListBox {
+          @bindable public value: unknown;
+        }
+
+        let i = 0;
+        @customElement({
+          name: 'assignee',
+          template: `<list-box value.two-way="value">
+          <template au-slot>
+            \${value}
+          </template>
+        </list-box>`
+        })
+        class Assignee {
+          private value;
+
+          public binding() {
+            this.value = i++;
+          }
+        }
+
+        @customElement({
+          name: 'item-row',
+          template: `<div><assignee></assignee></div>`
+        })
+        class ItemRow { }
+
+        yield new TestData(
+          'coping works correctly in conjunction with repeat.for',
+          `<template>
+            <item-row repeat.for="_ of 3"></item-row>
+           </template>`,
+          [
+            ListBox, Assignee, ItemRow
+          ],
+          {
+            'item-row': ['<div><assignee class="au"><list-box value.two-way="value" class="au"> <div> 0 </div></list-box></assignee></div>',null],
+            'item-row+item-row': ['<div><assignee class="au"><list-box value.two-way="value" class="au"> <div> 1 </div></list-box></assignee></div>',null],
+            'item-row+item-row+item-row': ['<div><assignee class="au"><list-box value.two-way="value" class="au"> <div> 2 </div></list-box></assignee></div>',null],
+          },
+        );
+      }
     }
     // #endregion
 
@@ -531,7 +781,7 @@ describe('au-slot', function () {
         [
           createMyElement(`<div with.bind="{item: people[0]}"><au-slot>\${item.firstName}</au-slot></div>`),
         ],
-        { 'my-element': [`<div><div>Mustermann</div></div>`, new AuSlotsInfo(['default'])] }
+        { 'my-element': [`<div><div>Mustermann</div></div>`, new AuSlotsInfo(['default'])] },
       );
       yield new TestData(
         'works with "with" on self',
@@ -1051,6 +1301,97 @@ describe('au-slot', function () {
           );
         }
       }
+
+      {
+        @customElement({
+          name: 'elem',
+          template: `Parent \${text}
+          <notch>
+            <child au-slot text.bind="text" view-model.ref="child"></child>
+          </notch>
+          \${child.id}`,
+        })
+        class Elem {
+          @bindable public text: string;
+        }
+
+        @customElement({
+          name: 'notch',
+          template: `Notch <au-slot></au-slot>`,
+        })
+        class Notch { }
+
+        let id = 0;
+        @customElement({
+          name: 'child',
+          template: `Id: \${id}. Child \${text}`,
+        })
+        class Child {
+          @bindable public text: string;
+          public id = id++;
+        }
+
+        yield new TestData(
+          'multiple usage of slotted custom element',
+          `<elem text="1"></elem><elem text="2"></elem>`,
+          [Elem, Notch, Child],
+          {
+            'elem': ['Parent 1 <notch class="au"> Notch <child text.bind="text" view-model.ref="child" class="au">Id: 0. Child 1</child></notch> 0', null],
+            'elem+elem': ['Parent 2 <notch class="au"> Notch <child text.bind="text" view-model.ref="child" class="au">Id: 1. Child 2</child></notch> 1', null],
+          }
+        );
+      }
+
+      {
+        @customElement({ name: 'tab-bar', template: '<au-slot></au-slot>' })
+        class TabBar { }
+
+        @customElement({
+          name: 'my-tab',
+          template: `<button active.class="active">\${label}</button>`
+        })
+        class MyTab {
+          @bindable public active: boolean;
+          @bindable public label: string;
+        }
+
+        @customElement({
+          name: 'parent',
+          template:
+            `<tab-bar>
+              <template au-slot>
+                <my-tab repeat.for="t of tabs" label.bind="t" active.bind="selected===t"
+                        click.trigger="selected=t"></my-tab>
+              </template>
+            </tab-bar>`
+        })
+        class Parent {
+          private readonly tabs = ['tab 1', 'tab 2'];
+          private readonly selected = 'tab 1';
+        }
+
+        yield new TestData(
+          'tab-bar',
+          `<parent></parent><parent></parent>`,
+          [MyTab, TabBar, Parent],
+          {},
+          async ({ host, platform }) => {
+            const myTabs = Array.from(host.querySelectorAll('button'));
+            assert.strictEqual(myTabs.length, 4, 'there should be 4 tabs');
+            const [tab1, tab2, tab3, tab4] = myTabs;
+
+            assert.contains(tab1.classList, 'active');
+            assert.contains(tab3.classList, 'active');
+
+            tab2.click();
+            platform.domWriteQueue.flush();
+            assert.notContains(tab1.classList, 'active');
+            assert.contains(tab2.classList, 'active');
+            assert.contains(tab3.classList, 'active');
+            assert.notContains(tab4.classList, 'active');
+          },
+        );
+      }
     }
     // #endregion
 
@@ -1217,7 +1558,7 @@ describe('au-slot', function () {
         public constructor(
           @IAuSlotsInfo public readonly slots: IAuSlotsInfo,
         ) {
-           assert.instanceOf(slots, AuSlotsInfo);
+          assert.instanceOf(slots, AuSlotsInfo);
         }
       }
       @customElement({
@@ -1228,7 +1569,7 @@ describe('au-slot', function () {
         public constructor(
           @IAuSlotsInfo public readonly slots: IAuSlotsInfo,
         ) {
-           assert.instanceOf(slots, AuSlotsInfo);
+          assert.instanceOf(slots, AuSlotsInfo);
         }
       }
       @customElement({
@@ -1239,7 +1580,7 @@ describe('au-slot', function () {
         public constructor(
           @IAuSlotsInfo public readonly slots: IAuSlotsInfo,
         ) {
-           assert.instanceOf(slots, AuSlotsInfo);
+          assert.instanceOf(slots, AuSlotsInfo);
         }
       }
 
@@ -1276,8 +1617,8 @@ describe('au-slot', function () {
       );
     }
   }
-  for (const { spec, template, expected, registrations, additionalAssertion } of getTestData()) {
-    $it(spec,
+  for (const { spec, template, expected, registrations, additionalAssertion, only } of getTestData()) {
+    (only ? $it.only : $it)(spec,
       async function (ctx) {
         const { host, error } = ctx;
         assert.deepEqual(error, null);

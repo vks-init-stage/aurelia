@@ -1,6 +1,6 @@
 {
-  "name": "@aurelia/store",
-  "version": "0.9.0",
+  "name": "@aurelia/store-v1",
+  "version": "2.0.0-alpha.5",
   "main": "dist/esm/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
@@ -32,15 +32,17 @@
     "build": "tsc -b",
     "dev": "tsc -b -w --preserveWatchOutput",
     "publish:dev": "npm publish --tag dev",
-    "publish:latest": "npm publish --tag latest"
+    "publish:latest": "npm publish --tag latest",
+    "rollup": "rollup -c"
   },
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@aurelia/kernel": "0.9.0",
-    "@aurelia/metadata": "0.9.0",
-    "@aurelia/platform": "0.9.0",
+    "@aurelia/kernel": "2.0.0-alpha.5",
+    "@aurelia/metadata": "2.0.0-alpha.5",
+    "@aurelia/platform": "2.0.0-alpha.5",
+    "@aurelia/runtime-html": "2.0.0-alpha.5",
     "rxjs": "^6.5.3"
   },
   "devDependencies": {

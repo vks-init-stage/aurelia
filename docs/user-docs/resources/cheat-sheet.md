@@ -704,6 +704,17 @@ export class MyComponent {
   // Explicitly create a new instance, even if the key is already registered as a singleton
   constructor(@newInstanceOf(IFoo) private foo: IFoo) {}
 }
+
+// Extend Window type for custom added properties or e.g. third party libraries like Redux DevTools which do so, yet inject the actual window object
+export interface IReduxDevTools extends Window {
+  devToolsExtension?: DevToolsExtension;
+  __REDUX_DEVTOOLS_EXTENSION__?: DevToolsExtension;
+}
+
+export class MyComponent {
+  // Note that the type itself is not responsible for resolving the proper key but the decorator
+  constructor(@IWindow private window: IReduxDevTools) {}
+}
 ```
 
 ## Making your code more robust with the TaskQueue
@@ -1121,6 +1132,10 @@ au.register(GlobalResources).app(...);
 ```
 
 ## Routing
+
+{% hint style="info" %}
+`Please note that we currently have an interim router implementation and that some (minor) changes to application code might be required when the original router is added back in.`
+{% endhint %}
 
 ### Migrating from v1
 

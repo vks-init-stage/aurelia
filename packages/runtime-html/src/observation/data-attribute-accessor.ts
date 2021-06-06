@@ -10,10 +10,8 @@ import type { IAccessor, LifecycleFlags } from '@aurelia/runtime';
  * @see ElementPropertyAccessor
  */
 export class DataAttributeAccessor implements IAccessor<string | null> {
-  [id: number]: number;
   public readonly obj!: HTMLElement;
   public readonly propertyKey: string = '';
-  public currentValue: string | null = null;
 
   // ObserverType.Layout is not always true, it depends on the property
   // but for simplicity, always treat as such
