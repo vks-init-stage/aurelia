@@ -26,9 +26,6 @@ postMerge :
 
       - name: runtime-html      
         path : "./packages/__tests__"
-        preRun:
-          command:
-            - node "./dist/esm/__tests__/setup-node.js"
             
         pattern: 
           - "./dist/esm/__tests__/setup-node.js"
