@@ -27,14 +27,14 @@ postMerge :
 #         configFile : ".mocharc.json"
       
       
-#       - name: kernel      
-#         path : "./packages/__tests__"
-#         pattern: 
-#           - "./dist/esm/__tests__/setup-node.js"
-#           - "./dist/esm/__tests__/1-kernel/**/*.spec.js"
+      - name: kernel      
+        path : "./packages/__tests__"
+        pattern: 
+          - "./dist/esm/__tests__/setup-node.js"
+          - "./dist/esm/__tests__/1-kernel/**/*.spec.js"
         
-#         framework : mocha
-#         configFile : ".mocharc.json"
+        framework : mocha
+        configFile : ".mocharc.json"
       
       
 #       - name: runtime      
@@ -46,24 +46,23 @@ postMerge :
 #         framework : mocha
 #         configFile : ".mocharc.json"
 
-      - name: runtime-html      
-        path : "./packages/__tests__"
+#       - name: runtime-html      
+#         path : "./packages/__tests__"
             
-        pattern: 
-          - "./dist/esm/__tests__/setup-node.js"
-          - "./dist/esm/__tests__/3-runtime-html/**/*.spec.js"
+#         pattern: 
+#           - "./dist/esm/__tests__/setup-node.js"
+#           - "./dist/esm/__tests__/3-runtime-html/**/*.spec.js"
         
-        framework : mocha
-        configFile : ".mocharc.json"
+#         framework : mocha
+#         configFile : ".mocharc.json"
         
         
 
         
         
         
-        
       
-        
+  
 preMerge : 
   
   subModules:          #Not to be changed
