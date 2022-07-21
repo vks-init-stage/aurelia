@@ -14,13 +14,13 @@ postMerge :
         framework : mocha
         configFile : ".mocharc.json"
       
-      - name: runtime      
-        path : "./packages/__tests__"
-        pattern: 
-          - "./dist/esm/__tests__/2-runtime/*.spec.js"
+#       - name: runtime      
+#         path : "./packages/__tests__"
+#         pattern: 
+#           - "./dist/esm/__tests__/2-runtime/*.spec.js"
         
-        framework : mocha
-        configFile : ".mocharc.json"
+#         framework : mocha
+#         configFile : ".mocharc.json"
         
         
         
