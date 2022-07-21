@@ -6,12 +6,22 @@ postMerge :
   
   subModules:          #Not to be changed
     
-      - name: router      
+#       - name: router      
+#         path : "./packages/__tests__"
+
+#         pattern: 
+#           - "./dist/esm/__tests__/setup-node.js"
+#           - "./dist/esm/__tests__/router/*.spec.js"
+
+#         framework : mocha
+#         configFile : ".mocharc.json"
+
+      - name: router-lite 
         path : "./packages/__tests__"
 
         pattern: 
           - "./dist/esm/__tests__/setup-node.js"
-          - "./dist/esm/__tests__/router/*.spec.js"
+          - "./dist/esm/__tests__/router-lite/*.spec.js"
 
         framework : mocha
         configFile : ".mocharc.json"
