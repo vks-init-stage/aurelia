@@ -5,6 +5,16 @@ postMerge :
       - npm run build
   
   subModules:          #Not to be changed
+    
+      - name: router      
+        path : "./packages/__tests__"
+
+        pattern: 
+          - "./dist/esm/__tests__/setup-node.js"
+          - "./dist/esm/__tests__/router/*.spec.js"
+
+        framework : mocha
+        configFile : ".mocharc.json"
       
 #       - name: kernel      
 #         path : "./packages/__tests__"
@@ -35,15 +45,7 @@ postMerge :
 #         configFile : ".mocharc.json"
         
         
-      - name: router      
-        path : "./packages/__tests__"
-            
-        pattern: 
-          - "./dist/esm/__tests__/setup-node.js"
-          - "./dist/esm/__tests__/router/*.spec.js""
-        
-        framework : mocha
-        configFile : ".mocharc.json"
+
         
         
         
