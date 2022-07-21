@@ -26,6 +26,7 @@ postMerge :
 #         framework : mocha
 #         configFile : ".mocharc.json"
       
+      
       - name: kernel      
         path : "./packages/__tests__"
         pattern: 
