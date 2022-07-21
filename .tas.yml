@@ -16,15 +16,15 @@ postMerge :
         framework : mocha
         configFile : ".mocharc.json"
 
-      - name: router-lite 
-        path : "./packages/__tests__"
+#       - name: router-lite 
+#         path : "./packages/__tests__"
 
-        pattern: 
-          - "./dist/esm/__tests__/setup-node.js"
-          - "./dist/esm/__tests__/router-lite/*.spec.js"
+#         pattern: 
+#           - "./dist/esm/__tests__/setup-node.js"
+#           - "./dist/esm/__tests__/router-lite/*.spec.js"
 
-        framework : mocha
-        configFile : ".mocharc.json"
+#         framework : mocha
+#         configFile : ".mocharc.json"
       
       
       - name: kernel      
@@ -37,14 +37,14 @@ postMerge :
         configFile : ".mocharc.json"
       
       
-      - name: runtime      
-        path : "./packages/__tests__"
-        pattern: 
-          - "./dist/esm/__tests__/setup-node.js"
-          - "./dist/esm/__tests__/2-runtime/*.spec.js"
+#       - name: runtime      
+#         path : "./packages/__tests__"
+#         pattern: 
+#           - "./dist/esm/__tests__/setup-node.js"
+#           - "./dist/esm/__tests__/2-runtime/*.spec.js"
         
-        framework : mocha
-        configFile : ".mocharc.json"
+#         framework : mocha
+#         configFile : ".mocharc.json"
 
 #       - name: runtime-html      
 #         path : "./packages/__tests__"
@@ -57,26 +57,26 @@ postMerge :
 #         configFile : ".mocharc.json"
         
         
-      - name: store-v1      
-        path : "./packages/__tests__"
+#       - name: store-v1      
+#         path : "./packages/__tests__"
             
-        pattern: 
-          - "./dist/esm/__tests__/setup-node.js"
-          - "./dist/esm/__tests__/store-v1/*.spec.js"
+#         pattern: 
+#           - "./dist/esm/__tests__/setup-node.js"
+#           - "./dist/esm/__tests__/store-v1/*.spec.js"
         
-        framework : mocha
-        configFile : ".mocharc.json"
+#         framework : mocha
+#         configFile : ".mocharc.json"
         
         
-      - name: validation      
-        path : "./packages/__tests__"
+#       - name: validation      
+#         path : "./packages/__tests__"
             
-        pattern: 
-          - "./dist/esm/__tests__/setup-node.js"
-          - "./dist/esm/__tests__/validation*/**/*.spec.js"
+#         pattern: 
+#           - "./dist/esm/__tests__/setup-node.js"
+#           - "./dist/esm/__tests__/validation*/**/*.spec.js"
         
-        framework : mocha
-        configFile : ".mocharc.json"
+#         framework : mocha
+#         configFile : ".mocharc.json"
   
 preMerge : 
   
