@@ -68,8 +68,15 @@ postMerge :
         configFile : ".mocharc.json"
         
         
+      - name: validation      
+        path : "./packages/__tests__"
+            
+        pattern: 
+          - "./dist/esm/__tests__/setup-node.js"
+          - "./dist/esm/__tests__/validation*/**/*.spec.js"
         
-      
+        framework : mocha
+        configFile : ".mocharc.json"
   
 preMerge : 
   
