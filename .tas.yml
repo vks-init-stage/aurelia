@@ -16,15 +16,15 @@ postMerge :
 #         framework : mocha
 #         configFile : ".mocharc.json"
 
-      - name: router-lite 
-        path : "./packages/__tests__"
+#       - name: router-lite 
+#         path : "./packages/__tests__"
 
-        pattern: 
-          - "./dist/esm/__tests__/setup-node.js"
-          - "./dist/esm/__tests__/router-lite/*.spec.js"
+#         pattern: 
+#           - "./dist/esm/__tests__/setup-node.js"
+#           - "./dist/esm/__tests__/router-lite/*.spec.js"
 
-        framework : mocha
-        configFile : ".mocharc.json"
+#         framework : mocha
+#         configFile : ".mocharc.json"
       
       
       - name: kernel      
@@ -57,15 +57,15 @@ postMerge :
 #         configFile : ".mocharc.json"
         
         
-#       - name: store-v1      
-#         path : "./packages/__tests__"
+      - name: store-v1      
+        path : "./packages/__tests__"
             
-#         pattern: 
-#           - "./dist/esm/__tests__/setup-node.js"
-#           - "./dist/esm/__tests__/store-v1/*.spec.js"
+        pattern: 
+          - "./dist/esm/__tests__/setup-node.js"
+          - "./dist/esm/__tests__/store-v1/*.spec.js"
         
-#         framework : mocha
-#         configFile : ".mocharc.json"
+        framework : mocha
+        configFile : ".mocharc.json"
         
         
 #       - name: validation      
