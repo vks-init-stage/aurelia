@@ -8,5 +8,5 @@
     "dist/esm/__tests__/integration/**/*.spec.js",
     "dist/esm/__tests__/store-v1/**/*.spec.js"
     ],
-  "require": ["ts-node/register","dist/esm/__tests__/setup-node.js"]
+  "files": ["ts-node/register","dist/esm/__tests__/setup-node.js"]
 }
