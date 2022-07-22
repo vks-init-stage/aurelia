@@ -40,11 +40,10 @@ postMerge :
       - name: runtime      
         path : "./packages/__tests__"
         pattern: 
-          - "./dist/esm/__tests__/2-runtime/array-observer.spec.js"
-          - "./dist/esm/__tests__/2-runtime/binding-context.spec.js"
+          - "./dist/esm/__tests__/2-runtime/*.spec.js"
           
         framework : mocha
-        configFile : ".mocharc.json"
+        configFile : ".mocharc.yml"
 
 #       - name: runtime-html      
 #         path : "./packages/__tests__"
