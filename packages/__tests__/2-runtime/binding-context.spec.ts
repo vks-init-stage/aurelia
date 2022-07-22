@@ -4,6 +4,8 @@ import {
   Scope,
 } from '@aurelia/runtime';
 import { assert } from '@aurelia/testing';
+import '../setup-node'
+
 
 describe('Scope', function () {
   describe('create', function () {
