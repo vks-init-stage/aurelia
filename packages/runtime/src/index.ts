@@ -1,6 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference path="../../global.d.ts" />
-import '../../__tests__/node_modules.js'
 
 export {
   alias,
