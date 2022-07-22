@@ -1,6 +1,6 @@
 import { ProxyObservable } from '@aurelia/runtime';
 import { assert } from '@aurelia/testing';
-
+import '../setup-node.js'
 describe('2-runtime/proxy-observable.spec.ts', function () {
   for (const { title, v, canWrap } of [
     // cant do

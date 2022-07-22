@@ -1,6 +1,6 @@
 import { all, Constructable, DI, factory, IContainer, inject, IResolvedFactory, lazy, newInstanceForScope, newInstanceOf, optional, Registration, singleton } from '@aurelia/kernel';
 import { assert } from '@aurelia/testing';
-
+import '../setup-node.js'
 describe('DI.get', function () {
   let container: IContainer;
 

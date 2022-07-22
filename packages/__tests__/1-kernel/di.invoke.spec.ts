@@ -1,6 +1,6 @@
 import { DI, IContainer } from '@aurelia/kernel';
 import { assert } from '@aurelia/testing';
-
+import '../setup-node.js'
 describe('DI.invoke', function () {
   let container: IContainer;
 

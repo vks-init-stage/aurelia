@@ -1,6 +1,6 @@
 import { Char } from '@aurelia/runtime';
 import { assert } from '@aurelia/testing';
-
+import '../setup-node.js'
 describe('[UNIT]3-runtime-html/has-multi-bindings.unit.spec.ts', function () {
   interface IBindingSpec {
     target: string;

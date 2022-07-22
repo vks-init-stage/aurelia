@@ -1,5 +1,5 @@
 import { assert } from '@aurelia/testing';
-
+import '../setup-node.js'
 export class Spy {
   public callRecords = new Map<string, any[][]>();
 

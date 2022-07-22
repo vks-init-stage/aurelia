@@ -1,7 +1,7 @@
 import { DI, IContainer, Registration } from '@aurelia/kernel';
 import { PropertyBinding, IPlatform, SelfBindingBehavior } from '@aurelia/runtime-html';
 import { assert } from '@aurelia/testing';
-
+import '../setup-node.js'
 describe('SelfBindingBehavior', function () {
   let container: IContainer;
   let sut: SelfBindingBehavior;

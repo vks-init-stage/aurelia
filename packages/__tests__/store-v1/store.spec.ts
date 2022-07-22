@@ -15,7 +15,7 @@ import {
   createCallCounter
 } from "./helpers.js";
 import { assert } from '@aurelia/testing';
-
+import '../setup-node.js'
 describe("store-v1/store.spec.ts", function () {
   this.timeout(100);
   it("should accept an initial state", function (done) {

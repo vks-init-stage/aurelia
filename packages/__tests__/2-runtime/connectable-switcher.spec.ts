@@ -1,6 +1,6 @@
 import { IConnectable, ConnectableSwitcher, ProxyObservable } from '@aurelia/runtime';
 import { assert } from '@aurelia/testing';
-
+import '../setup-node.js'
 describe('2-runtime/watcher-switcher.spec.ts', function () {
   it('enters/exits', function () {
     // eslint-disable-next-line

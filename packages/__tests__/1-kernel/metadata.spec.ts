@@ -1,7 +1,7 @@
 import { Metadata, metadata } from '@aurelia/metadata';
 import { singleton } from '@aurelia/kernel';
 import { assert } from '@aurelia/testing';
-
+import '../setup-node.js'
 describe('Metadata', function () {
   describe('define', function () {
     it('throws TypeError on invalid target', function () {

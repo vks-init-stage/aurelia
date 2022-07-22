@@ -1,5 +1,5 @@
 import { assert } from '@aurelia/testing';
-import { RouteExpression, AST, NavigationOptions } from '@aurelia/router-lite';
+import '../setup-node.js'import { RouteExpression, AST, NavigationOptions } from '@aurelia/router-lite';
 
 const {
   CompositeSegmentExpression,

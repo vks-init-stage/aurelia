@@ -1,6 +1,6 @@
 import { ContainerConfiguration, DefaultResolver, DI, IContainer } from '@aurelia/kernel';
 import { assert } from '@aurelia/testing';
-
+import '../setup-node.js'
 describe('IContainerConfiguration', function () {
   let container0: IContainer;
   let container1: IContainer;

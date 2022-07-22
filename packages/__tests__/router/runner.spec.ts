@@ -1,6 +1,6 @@
 import { Runner, Step } from '@aurelia/router';
 import { assert } from '@aurelia/testing';
-
+import '../setup-node.js'
 const createTimedPromise = (value, time: number, previousValue?, reject = false): Promise<unknown> => {
   return new Promise((res, rej) => {
     // console.log(`(promise ${value})`);

@@ -1,7 +1,7 @@
 import { DI, IContainer } from '@aurelia/kernel';
 import { bindingBehavior, BindingBehavior } from '@aurelia/runtime';
 import { assert } from '@aurelia/testing';
-
+import '../setup-node.js'
 describe(`@bindingBehavior('foo')`, function () {
   let container: IContainer;
 

@@ -1,6 +1,6 @@
 import { ConfigurableRoute, Endpoint, RecognizedRoute, RouteRecognizer } from '@aurelia/route-recognizer';
 import { assert } from '@aurelia/testing';
-
+import '../setup-node.js'
 describe(RouteRecognizer.name, function () {
 
   interface RecognizeSpec {

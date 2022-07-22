@@ -1,7 +1,7 @@
 // import { Metadata } from '@aurelia/metadata';
 import { all, DI, IContainer, Registration } from '@aurelia/kernel';
 import { assert } from '@aurelia/testing';
-
+import '../setup-node.js'
 describe('1-kernel/di.getAll.spec.ts', function () {
   let container: IContainer;
 

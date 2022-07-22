@@ -1,6 +1,6 @@
 import { view, ViewLocator, ViewValueConverter, CustomElement, Views, CustomElementDefinition } from '@aurelia/runtime-html';
 import { assert } from '@aurelia/testing';
-
+import '../setup-node.js'
 describe('the view value converter', function () {
   it('delegates view location to the view locator service', function () {
     const fakeResult = class Component {};

@@ -1,6 +1,6 @@
 import { EventAggregator, IEventAggregator } from '@aurelia/kernel';
 import { assert } from '@aurelia/testing';
-
+import '../setup-node.js'
 type EA = IEventAggregator & {
   eventLookup: Record<string, ((...args: unknown[]) => void)[]>;
   messageHandlers: any[];

@@ -1,7 +1,7 @@
 import { skip, take } from "rxjs/operators";
 
 import { assert } from '@aurelia/testing';
-import {
+import '../setup-node.js'import {
   MiddlewarePlacement,
   logMiddleware,
   localStorageMiddleware,

@@ -2,7 +2,7 @@
 // import { LetBinding, LifecycleFlags, BindingMode, ExpressionKind, IBindingTarget, IExpression, IObserverLocator, Scope, Scope, State } from '@aurelia/runtime';
 // import { MockExpression } from '../mock.js';
 // import { assert } from '@aurelia/testing';
-
+import '../setup-node.js'
 // const getName = (o: any) => Object.prototype.toString.call(o).slice(8, -1);
 
 // describe('LetBinding', function () {

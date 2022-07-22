@@ -1,7 +1,7 @@
 import { DI, IContainer } from '@aurelia/kernel';
 import { valueConverter, ValueConverter } from '@aurelia/runtime';
 import { assert } from '@aurelia/testing';
-
+import '../setup-node.js'
 describe(`@valueConverter('foo')`, function () {
   let container: IContainer;
 

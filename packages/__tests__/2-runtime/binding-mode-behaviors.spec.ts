@@ -13,7 +13,7 @@ import {
   IPlatform,
 } from '@aurelia/runtime-html';
 import { assert } from '@aurelia/testing';
-
+import '../setup-node.js'
 const tests = [
   { Behavior: OneTimeBindingBehavior, mode: BindingMode.oneTime },
   { Behavior: ToViewBindingBehavior, mode: BindingMode.toView },

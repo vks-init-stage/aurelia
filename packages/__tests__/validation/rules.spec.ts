@@ -1,5 +1,5 @@
 import { assert } from '@aurelia/testing';
-import { EqualsRule, LengthRule, RangeRule, RegexRule, RequiredRule, SizeRule } from '@aurelia/validation';
+import '../setup-node.js'import { EqualsRule, LengthRule, RangeRule, RegexRule, RequiredRule, SizeRule } from '@aurelia/validation';
 
 describe('validation/rules.spec.ts/rule execution', function () {
   const requiredRuleDataRows = [

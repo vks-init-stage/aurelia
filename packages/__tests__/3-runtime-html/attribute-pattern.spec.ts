@@ -7,7 +7,7 @@ import {
   AttributePattern
 } from '@aurelia/runtime-html';
 import { assert } from '@aurelia/testing';
-
+import '../setup-node.js'
 describe('@attributePattern', function () {
   for (const [defs, tests] of [
     [

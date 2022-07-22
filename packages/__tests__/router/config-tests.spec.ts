@@ -1,7 +1,7 @@
 import { customElement, ICustomElementController } from '@aurelia/runtime-html';
 import { IRouterOptions, route, Routes, routes } from '@aurelia/router';
 import { assert } from '@aurelia/testing';
-
+import '../setup-node.js'
 import { IHookInvocationAggregator, IHIAConfig, HookName } from './_shared/hook-invocation-tracker.js';
 import { HookSpecs, TestRouteViewModelBase } from './_shared/view-models.js';
 import { hookSpecsMap, verifyInvocationsEqual } from './_shared/hook-spec.js';

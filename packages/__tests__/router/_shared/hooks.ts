@@ -1,5 +1,5 @@
 import { assert } from '@aurelia/testing';
-import { HookName } from './hook-invocation-tracker.js';
+import '../setup-node.js'import { HookName } from './hook-invocation-tracker.js';
 import { TransitionComponent } from './component.js';
 import { Transition } from './transition.js';
 import { TransitionViewport } from './transition-viewport.js';

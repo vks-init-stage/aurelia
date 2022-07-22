@@ -2,7 +2,7 @@ import { skip } from "rxjs/operators";
 
 import { Registration } from '@aurelia/kernel';
 import { assert } from '@aurelia/testing';
-import { STORE, dispatchify, Store, UnregisteredActionError } from '@aurelia/store-v1';
+import '../setup-node.js'import { STORE, dispatchify, Store, UnregisteredActionError } from '@aurelia/store-v1';
 
 import { createTestStore, testState } from './helpers.js';
 

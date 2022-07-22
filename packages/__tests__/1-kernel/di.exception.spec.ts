@@ -1,6 +1,6 @@
 import { DI, optional } from '@aurelia/kernel';
 import { assert } from '@aurelia/testing';
-
+import '../setup-node.js'
 describe('Exception', function () {
   it('No registration for interface', function () {
     const container = DI.createContainer();
