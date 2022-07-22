@@ -40,7 +40,7 @@ postMerge :
       - name: runtime      
         path : "./packages/__tests__"
         pattern: 
-          - "./dist/esm/__tests__/setup-node.js"
+#           - "./dist/esm/__tests__/setup-node.js"
           - "./dist/esm/__tests__/2-runtime/array-observer.spec.ts"
         
         framework : mocha
