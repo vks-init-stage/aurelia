@@ -1,0 +1,28 @@
+# {
+#   "recursive": true,
+#   "reporter": "min",
+#   "timeout": "5000",
+#   "ui": "bdd",
+#   "watch-extensions" : ["js"],
+#   "exclude" : [
+#     "dist/esm/__tests__/integration/**/*.spec.js",
+#     "dist/esm/__tests__/store-v1/**/*.spec.js"
+#     ],
+#   "require": ["./setup-node.ts"]
+# }
+
+
+extension: ['js']
+
+file:
+  - './dist/esm/__tests__/setup-node.js'
+
+
+recursive: true
+reporter: 'min'
+
+# require: '@babel/register'
+
+timeout: '5000' # same as "timeout: '2s'"
+trace-warnings: true # node flags ok
+ui: 'bdd'
