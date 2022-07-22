@@ -41,6 +41,7 @@ postMerge :
         path : "./packages/__tests__"
         pattern: 
           - "./dist/esm/__tests__/2-runtime/array-observer.spec.js"
+          - "./dist/esm/__tests__/2-runtime/ast.integration.spec.js"
           - "./dist/esm/__tests__/2-runtime/binding-context.spec.js"
           
         framework : mocha
