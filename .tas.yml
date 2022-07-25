@@ -6,90 +6,90 @@ postMerge :
   
   subModules:          #Not to be changed
     
-#       - name: router      
-#         path : "./packages/__tests__"
+      - name: router      
+        path : "./packages/__tests__"
 
-#         pattern: 
+        pattern: 
 
-#           - "./dist/esm/__tests__/router/*.spec.js"
+          - "./dist/esm/__tests__/router/*.spec.js"
 
-#         framework : mocha
-#         configFile : ".mocharc.yml"
+        framework : mocha
+        configFile : ".mocharc.yml"
 
-#       - name: router-lite 
-#         path : "./packages/__tests__"
+      - name: router-lite 
+        path : "./packages/__tests__"
 
-#         pattern: 
-#           - "./dist/esm/__tests__/router-lite/*.spec.js"
+        pattern: 
+          - "./dist/esm/__tests__/router-lite/*.spec.js"
 
-#         framework : mocha
-#         configFile : ".mocharc.yml"
+        framework : mocha
+        configFile : ".mocharc.yml"
       
       
-#       - name: kernel      
-#         path : "./packages/__tests__"
-#         pattern: 
-#           - "./dist/esm/__tests__/setup-node.js"
-#           - "./dist/esm/__tests__/1-kernel/**/*.spec.js"
+      - name: kernel      
+        path : "./packages/__tests__"
+        pattern: 
+          - "./dist/esm/__tests__/setup-node.js"
+          - "./dist/esm/__tests__/1-kernel/**/*.spec.js"
         
-#         framework : mocha
-#         configFile : ".mocharc.json"
+        framework : mocha
+        configFile : ".mocharc.json"
       
       
       
-#       - name: runtime      
-#         path : "./packages/__tests__"
-#         pattern: 
-#           - "./dist/esm/__tests__/2-runtime/*.spec.js"
+      - name: runtime      
+        path : "./packages/__tests__"
+        pattern: 
+          - "./dist/esm/__tests__/2-runtime/*.spec.js"
  
-#         framework : mocha
-#         configFile : ".mocharc.yml"
+        framework : mocha
+        configFile : ".mocharc.yml"
 
-#       - name: runtime-html      
-#         path : "./packages/__tests__"
-            
-#         pattern: 
-#           - "./dist/esm/__tests__/3-runtime-html/**/*.spec.js"
-        
-#         framework : mocha
-#         configFile : ".mocharc.yml"
-        
-        
-      - name: packages     
+      - name: runtime-html      
         path : "./packages/__tests__"
             
         pattern: 
-          - "./dist/esm/__tests__/router/*.spec.js"
-          - "./dist/esm/__tests__/router-lite/*.spec.js"
-          - "./dist/esm/__tests__/1-kernel/**/*.spec.js" 
-          - "./dist/esm/__tests__/2-runtime/*.spec.js"
           - "./dist/esm/__tests__/3-runtime-html/**/*.spec.js"
-          - "./dist/esm/__tests__/validation*/**/*.spec.js"
-          - "./dist/esm/__tests__/i18n/*.spec.js"
-
         
         framework : mocha
         configFile : ".mocharc.yml"
         
         
-        
-#       - name: validation      
+#       - name: packages     
 #         path : "./packages/__tests__"
             
 #         pattern: 
+#           - "./dist/esm/__tests__/router/*.spec.js"
+#           - "./dist/esm/__tests__/router-lite/*.spec.js"
+#           - "./dist/esm/__tests__/1-kernel/**/*.spec.js" 
+#           - "./dist/esm/__tests__/2-runtime/*.spec.js"
+#           - "./dist/esm/__tests__/3-runtime-html/**/*.spec.js"
 #           - "./dist/esm/__tests__/validation*/**/*.spec.js"
-        
-#         framework : mocha
-#         configFile : ".mocharc.yml"
-
-#       - name: i18n      
-#         path : "./packages/__tests__"
-            
-#         pattern: 
 #           - "./dist/esm/__tests__/i18n/*.spec.js"
+
         
 #         framework : mocha
 #         configFile : ".mocharc.yml"
+        
+        
+        
+      - name: validation      
+        path : "./packages/__tests__"
+            
+        pattern: 
+          - "./dist/esm/__tests__/validation*/**/*.spec.js"
+        
+        framework : mocha
+        configFile : ".mocharc.yml"
+
+      - name: i18n      
+        path : "./packages/__tests__"
+            
+        pattern: 
+          - "./dist/esm/__tests__/i18n/*.spec.js"
+        
+        framework : mocha
+        configFile : ".mocharc.yml"
         
         
 
