@@ -17,8 +17,6 @@ extension: ['js']
 files:
   - './dist/esm/__tests__/setup-node.js'
 
-require: "./dist/esm/__tests__/setup-node.js"
-
 
 recursive: true
 reporter: 'min'
