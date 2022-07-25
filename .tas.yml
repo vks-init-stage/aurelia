@@ -16,14 +16,14 @@ postMerge :
 #         framework : mocha
 #         configFile : ".mocharc.yml"
 
-      - name: router-lite 
-        path : "./packages/__tests__"
+#       - name: router-lite 
+#         path : "./packages/__tests__"
 
-        pattern: 
-          - "./dist/esm/__tests__/router-lite/*.spec.js"
+#         pattern: 
+#           - "./dist/esm/__tests__/router-lite/*.spec.js"
 
-        framework : mocha
-        configFile : ".mocharc.yml"
+#         framework : mocha
+#         configFile : ".mocharc.yml"
       
       
 #       - name: kernel      
@@ -67,15 +67,14 @@ postMerge :
         
         
         
-#       - name: validation      
-#         path : "./packages/__tests__"
+      - name: validation      
+        path : "./packages/__tests__"
             
-#         pattern: 
-#           - "./dist/esm/__tests__/setup-node.js"
-#           - "./dist/esm/__tests__/validation*/**/*.spec.js"
+        pattern: 
+          - "./dist/esm/__tests__/validation*/**/*.spec.js"
         
-#         framework : mocha
-#         configFile : ".mocharc.json"
+        framework : mocha
+        configFile : ".mocharc.yml"
 
 #       - name: packages-tooling      
 #         path : "./packages-tooling/__tests__/."
