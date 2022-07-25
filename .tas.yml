@@ -38,13 +38,13 @@ postMerge :
       
       
       
-#       - name: runtime      
-#         path : "./packages/__tests__"
-#         pattern: 
-#           - "./dist/esm/__tests__/2-runtime/*.spec.js"
+      - name: runtime      
+        path : "./packages/__tests__"
+        pattern: 
+          - "./dist/esm/__tests__/2-runtime/*.spec.js"
  
-#         framework : mocha
-#         configFile : ".mocharc.yml"
+        framework : mocha
+        configFile : ".mocharc.yml"
 
 #       - name: runtime-html      
 #         path : "./packages/__tests__"
@@ -79,14 +79,14 @@ postMerge :
 #         framework : mocha
 #         configFile : ".mocharc.json"
 
-      - name: packages-tooling      
-        path : "./packages-tooling/__tests__/."
+#       - name: packages-tooling      
+#         path : "./packages-tooling/__tests__/."
             
-        pattern: 
-          - "./dist/cjs/__tests__/**/*.spec.js"
+#         pattern: 
+#           - "./dist/cjs/__tests__/**/*.spec.js"
         
-        framework : mocha
-        configFile : ".mocharc.yml"
+#         framework : mocha
+#         configFile : ".mocharc.yml"
 
 
   
