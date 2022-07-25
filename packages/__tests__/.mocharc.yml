@@ -14,7 +14,7 @@
 
 extension: ['js']
 
-file:
+files:
   - './dist/esm/__tests__/setup-node.js'
 
 require: "./dist/esm/__tests__/setup-node.js"
