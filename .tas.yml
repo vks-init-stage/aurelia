@@ -55,22 +55,6 @@ postMerge :
         configFile : ".mocharc.yml"
         
         
-#       - name: packages     
-#         path : "./packages/__tests__"
-            
-#         pattern: 
-#           - "./dist/esm/__tests__/router/*.spec.js"
-#           - "./dist/esm/__tests__/router-lite/*.spec.js"
-#           - "./dist/esm/__tests__/1-kernel/**/*.spec.js" 
-#           - "./dist/esm/__tests__/2-runtime/*.spec.js"
-#           - "./dist/esm/__tests__/3-runtime-html/**/*.spec.js"
-#           - "./dist/esm/__tests__/validation*/**/*.spec.js"
-#           - "./dist/esm/__tests__/i18n/*.spec.js"
-
-        
-#         framework : mocha
-#         configFile : ".mocharc.yml"
-        
         
         
       - name: validation      
