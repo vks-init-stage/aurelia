@@ -10,11 +10,11 @@ postMerge :
         path : "./packages/__tests__"
 
         pattern: 
-          - "./dist/esm/__tests__/setup-node.js"
+
           - "./dist/esm/__tests__/router/*.spec.js"
 
         framework : mocha
-        configFile : ".mocharc.json"
+        configFile : ".mocharc.yml"
 
 #       - name: router-lite 
 #         path : "./packages/__tests__"
