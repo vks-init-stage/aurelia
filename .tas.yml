@@ -55,14 +55,14 @@ postMerge :
 #         configFile : ".mocharc.yml"
         
         
-      - name: store-v1      
-        path : "./packages/__tests__"
+#       - name: store-v1      
+#         path : "./packages/__tests__"
             
-        pattern: 
-          - "./dist/esm/__tests__/store-v1/*.spec.js"
+#         pattern: 
+#           - "./dist/esm/__tests__/store-v1/*.spec.js"
         
-        framework : mocha
-        configFile : ".mocharc.yml"
+#         framework : mocha
+#         configFile : ".mocharc.yml"
         
         
         
@@ -74,6 +74,17 @@ postMerge :
         
 #         framework : mocha
 #         configFile : ".mocharc.yml"
+
+      - name: i18n      
+        path : "./packages/__tests__"
+            
+        pattern: 
+          - "./dist/esm/__tests__/i18n/*.spec.js"
+        
+        framework : mocha
+        configFile : ".mocharc.yml"
+        
+        
 
 #       - name: packages-tooling      
 #         path : "./packages-tooling/__tests__/."
